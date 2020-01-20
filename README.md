@@ -7,7 +7,8 @@ Build Instructions
 ```
 Download or clone the repository
 Go to the repository folder and run 'pod install'
-Open the xc workspace file.
+Open the wikiPOI.xcworkspace file in XCode.
+Buld and run the project
 ```
 
 Development Environment
