@@ -118,10 +118,11 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
     {
         manager.delegate = self;
         manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.distanceFilter = kCLDistanceFilterNone
         mapView.showsUserLocation = true;
-        
+
         manager.rx
             .didChangeAuthorization
             .subscribe(onNext: {_, status in
@@ -131,14 +132,13 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
                         self.present(self.locationAlert, animated: true, completion: nil)
                     }
                 case .notDetermined:
-                    print("Authorization: not determined")
+                    ()
                 case .restricted:
-                    print("Authorization: restricted")
+                    ()
                 case .authorizedAlways, .authorizedWhenInUse:
-                    print("All good fire request")
-                    self.manager.startUpdatingLocation()
+                    ()
                 @unknown default:
-                    print("Default")
+                    ()
                 }
             })
             .disposed(by: disposeBag)
@@ -150,7 +150,7 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
             .disposed(by: disposeBag)
         
         _ = pois.asObservable().bind(to:
-        mapView.rx.annotations)
+            mapView.rx.annotations)
     }
     
     private func initializeCollectionView() {
@@ -227,7 +227,7 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
                 cell.fourthLabel.isHidden = true;
                 cell.fourthImage.isHidden = true;
             }
-    
+            
             cell.fifthLabel.text = self.getDurationInString(element.duration)
             cell.departureLabel.text = self.getFormattedTime(unixMilliSeconds: element.startTime) + " - " + self.getFormattedTime(unixMilliSeconds: element.endTime);
             return cell
@@ -324,10 +324,10 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
     private func loadNearbyPOIsToMap(_ articles: [Article]?)
     {
         guard let articles = articles
-        else { return }
+            else { return }
         annotations = loadPointsOfInterest(articles);
         self.pois.onNext(annotations);
-    
+        
         /// Reactive extensions for MKMapViewDelegate's
         /// various delegate methods
         mapView.rx.willStartLoadingMap
@@ -346,7 +346,7 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
             .subscribe(onNext: { _ in
             })
             .disposed(by: disposeBag)
-
+        
         mapView.rx.region
             .subscribe(onNext: { region in
             })
@@ -672,12 +672,9 @@ extension ViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("Annotation cliked");
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("Annotation cliked");
-        
         if let view = view as? MKPinAnnotationView {
             view.pinTintColor = UIColor.blue
         }
