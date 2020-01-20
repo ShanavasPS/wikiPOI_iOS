@@ -51,10 +51,12 @@ On selecting the map, the routes are removed and all the previous pois are popul
 Apollo
 
 ```
-Decided to go with the "https://digitransit.fi/en/developers/apis/1-routing-api/routes/" API as I thought it would be best to get information which might have more accurate details and route information in Finland.
+Decided to go with the "https://digitransit.fi/en/developers/apis/1-routing-api/routes/" API,
+instead of the Google Directions API, as I thought it would be best to get information form digitranstit,
+which seemed to have more detailed route information.
 
-And so I had to use the Apollo GraphQl client.
-
+Hence I had to install the Apollo client for GraphQl.
+Refer for more info : https://www.apollographql.com/docs/ios/installation/
 ```
 
 Polyline
@@ -71,7 +73,8 @@ Different transit modes are displayed in different color to easily distinguish b
 POI Details
 
 ```
-The wiki API for fetching the poi details did not gave the urls to the POI and the API which I used to fetch the image urls did not gave the POI description.
+The wiki API for fetching the poi details did not gave the urls to the POI 
+and the API which I used to fetch the image urls did not gave the POI description.
 So I had to call two APIs to fetch the details of a selected POI.
 
 Also, I have only tried to display the jpg images and ignored the svg images for the POI.
