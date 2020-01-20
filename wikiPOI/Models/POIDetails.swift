@@ -11,18 +11,18 @@ import MapKit
 
 struct detailedPOIResult: Decodable
 {
-    let query:DataResponse;
+    let query:DataResponse?;
 }
 
 struct pageImages: Decodable{
-    let ns: Int;
-    let title: String;
+    let ns: Int?;
+    let title: String?;
 }
 
 public struct PageIdModel: Decodable {
-    let pageid: Int;
-    let ns: Int;
-    let title: String;
+    let pageid: Int?;
+    let ns: Int?;
+    let title: String?;
     let contentmodel: String?;
     let pagelanguage: String?;
     let pagelanguagehtmlcode: String?;
@@ -36,8 +36,8 @@ public struct PageIdModel: Decodable {
 }
 
 struct GenericCodingKeys: CodingKey {
-    var stringValue: String
     var intValue: Int?
+    var stringValue: String
 
     init?(stringValue: String) { self.stringValue = stringValue }
     init?(intValue: Int) { self.intValue = intValue; self.stringValue = "\(intValue)" }

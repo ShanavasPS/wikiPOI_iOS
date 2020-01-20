@@ -10,27 +10,27 @@ import Foundation
 
 struct queryResult: Decodable
 {
-    let query:Articles;
+    let query:Articles?;
 }
 
 struct Articles: Decodable
 {
-    let geosearch: [Article];
+    let geosearch: [Article]?;
 }
 
 struct Article: Decodable
 {
-    let pageid: Int;
-    let ns: Int;
-    let title: String;
-    let lat: Double;
-    let lon: Double;
-    let dist: Double;
-    let primary: String;
+    let pageid: Int?;
+    let ns: Int?;
+    let title: String?;
+    let lat: Double?;
+    let lon: Double?;
+    let dist: Double?;
+    let primary: String?;
 }
 
 struct Location: Decodable
 {
-    let latitude: Double;
-    let longitude: Double;
+    let latitude: Double?;
+    let longitude: Double?;
 }

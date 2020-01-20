@@ -27,7 +27,7 @@ struct ImageDetails: Decodable
 
 struct POIImageResult: Decodable
 {
-    let query:ImageDataResponse;
+    let query:ImageDataResponse?;
 }
 
 struct ImageDataResponse: Decodable {

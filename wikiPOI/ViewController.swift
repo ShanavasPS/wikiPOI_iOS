@@ -127,7 +127,6 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
             .subscribe(onNext: {_, status in
                 switch status {
                 case .denied:
-                    print("Authorization denied")
                     DispatchQueue.main.async {
                         self.present(self.locationAlert, animated: true, completion: nil)
                     }
@@ -313,15 +312,19 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
         
         URLRequest.load(resource: resource)
             .subscribe(onNext: { result in
-                let query = result.query;
-                DispatchQueue.main.async {
-                    self.loadNearbyPOIsToMap(query.geosearch);
+                if let query = result.query {
+                    DispatchQueue.main.async {
+                        self.loadNearbyPOIsToMap(query.geosearch);
+                    }
                 }
             }).disposed(by: disposeBag);
+        
     }
     
-    private func loadNearbyPOIsToMap(_ articles: [Article])
+    private func loadNearbyPOIsToMap(_ articles: [Article]?)
     {
+        guard let articles = articles
+        else { return }
         annotations = loadPointsOfInterest(articles);
         self.pois.onNext(annotations);
     
@@ -330,26 +333,22 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
         mapView.rx.willStartLoadingMap
             .asDriver()
             .drive(onNext: {
-                print("Map started loading")
             })
             .disposed(by: disposeBag)
         
         mapView.rx.didFinishLoadingMap
             .asDriver()
             .drive(onNext: {
-                print("Map finished loading")
             })
             .disposed(by: disposeBag)
         
         mapView.rx.regionDidChangeAnimated
             .subscribe(onNext: { _ in
-                print("Map region changed")
             })
             .disposed(by: disposeBag)
 
         mapView.rx.region
             .subscribe(onNext: { region in
-                print("Map region is now \(region)")
             })
             .disposed(by: disposeBag)
     }
@@ -527,7 +526,7 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
     func loadPointsOfInterest(_ articles: [Article]) -> [PointOfInterest] {
         //Convert the Article model to an array of PointOfInterest
         let cities = articles.map { (article) -> PointOfInterest in
-            return PointOfInterest(title: "", poiTitle: article.title, subtitle: article.primary, coordinate: CLLocationCoordinate2D(latitude: article.lat, longitude: article.lon), pageId: article.pageid, dist: article.dist);
+            return PointOfInterest(title: "", poiTitle: article.title ?? "", subtitle: article.primary ?? "", coordinate: CLLocationCoordinate2D(latitude: article.lat ?? 0.0, longitude: article.lon ?? 0.0), pageId: article.pageid ?? 0, dist: article.dist ?? 0.0);
         }
         return cities
     }
@@ -548,8 +547,10 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
         URLRequest.load(resource: resource)
             .subscribe(onNext: { result in
                 self.fetchImageUrls();
-                DispatchQueue.main.async {
-                    self.displayDetailedPOIs(result.query);
+                if let query = result.query {
+                    DispatchQueue.main.async {
+                        self.displayDetailedPOIs(query);
+                    }
                 }
             }).disposed(by: disposeBag);
     }
