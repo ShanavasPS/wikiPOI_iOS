@@ -1,0 +1,45 @@
+PODS:
+  - Apollo (0.21.0):
+    - Apollo/Core (= 0.21.0)
+  - Apollo/Core (0.21.0)
+  - Polyline (4.2.1)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxCoreLocation (1.3.2):
+    - RxCoreLocation/Core (= 1.3.2)
+  - RxCoreLocation/Core (1.3.2):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxMKMapView (4.4.0):
+    - RxCocoa (~> 4.4)
+    - RxSwift (~> 4.4)
+  - RxSwift (4.5.0)
+
+DEPENDENCIES:
+  - Apollo
+  - Polyline (~> 4.0)
+  - RxCocoa (~> 4.0)
+  - RxCoreLocation (~> 1.3)
+  - RxMKMapView
+  - RxSwift (~> 4.0)
+
+SPEC REPOS:
+  trunk:
+    - Apollo
+    - Polyline
+    - RxCocoa
+    - RxCoreLocation
+    - RxMKMapView
+    - RxSwift
+
+SPEC CHECKSUMS:
+  Apollo: 56a0aa81b744bf2810a8277e705f155c91ac9055
+  Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxCoreLocation: 23d0f2f06fba5af57f2fa9064a5c165e75eb4c33
+  RxMKMapView: e413c9f349df894254ed6b15fccee3952ac86dc6
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+
+PODFILE CHECKSUM: fdd2bed3965e81de6b26b18251959547746b8cd1
+
+COCOAPODS: 1.8.4

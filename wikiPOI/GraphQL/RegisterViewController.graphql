@@ -1,0 +1,8 @@
+query stop($id: String!){
+  stop(id: $id) {
+    name
+    lat
+    lon
+    wheelchairBoarding
+  }
+}

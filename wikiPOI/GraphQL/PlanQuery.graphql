@@ -1,0 +1,49 @@
+query plan ($fromlat: Float!, $fromlon: Float!, $tolat: Float!, $tolon: Float!){
+  plan(
+    from: {lat: $fromlat, lon: $fromlon},
+    to: {lat: $tolat, lon: $tolon},
+  ) {
+    itineraries {
+      startTime
+      endTime
+      walkDistance
+      duration
+      legs {
+        mode
+        duration
+        startTime
+        endTime
+        legGeometry {
+          length
+          points
+        }
+        intermediateStops {
+          name
+        }
+        from {
+          lat
+          lon
+          name
+          stop {
+            code
+            name
+            gtfsId
+          }
+        }
+        to {
+          lat
+          lon
+          name
+        }
+        trip {
+          tripHeadsign
+          routeShortName
+          tripGeometry {
+            length
+            points
+          }
+        }
+      }
+    }
+  }
+}
