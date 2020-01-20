@@ -3,6 +3,35 @@
 A simple iOS application to fetch the current location of the device and get nearby
 English language Wikipedia articles.
 
+Build Instructions
+```
+Download or clone the repository
+Go to the repository folder and run 'pod install'
+Open the xc workspace file.
+```
+
+Development Environment
+```
+MacOS Mojave 10.14.6
+XCode 11.3
+```
+
+Tested Devices
+```
+iPhone SE - iOS 12.1.2
+iPhone X - iOS 13.3
+```
+
+Pods used
+```
+Apollo - GraphQl client
+Polyline 
+RxCoreLocation
+RxMKMapView
+RxSwift
+RxCocoa
+```
+
 Workflow
 ```
 The nearby articles are shown on the map as a point of interest (POI) based on the current location. 
@@ -18,15 +47,7 @@ On selecting any of the suggested routes, application shows direction from the c
 On selecting the map, the routes are removed and all the previous pois are populated again.
 
 ```
-3rd party modules used include
 
-```
-Apollo - GraphQl client
-Polyline 
-RxCoreLocation
-RxMKMapView
-
-```
 Apollo
 
 ```
