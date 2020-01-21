@@ -14,7 +14,7 @@ import MapKit
 import RxMKMapView
 import Polyline
 
-class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -122,7 +122,7 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.distanceFilter = kCLDistanceFilterNone
         mapView.showsUserLocation = true;
-
+        
         manager.rx
             .didChangeAuthorization
             .subscribe(onNext: {_, status in
@@ -174,6 +174,8 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
     }
     
     private func initializeRouteSuggestionsTableView() {
+        
+        routesTableView.layoutIfNeeded();
         routesTableView.rx
             .setDelegate(self)
             .disposed(by: disposeBag);
@@ -187,55 +189,15 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeCell") as! RouteSuggestionsTableViewCell
             
-            if element.legs.count > 0 {
-                cell.firstLabel.text = self.getDisplayTextForTheMode(element.legs[0]);
-                cell.firstImage.image = UIImage(named: self.getImageForTheMode(element.legs[0]));
-                cell.firstLabel.isHidden = false;
-                cell.firstImage.isHidden = false;
-            }
-            else {
-                cell.firstLabel.isHidden = true;
-                cell.firstImage.isHidden = true;
-            }
-            if element.legs.count > 1 {
-                cell.secondLabel.text = self.getDisplayTextForTheMode(element.legs[1]);
-                cell.secondImage.image = UIImage(named: self.getImageForTheMode(element.legs[1]));
-                cell.secondLabel.isHidden = false;
-                cell.secondImage.isHidden = false;
-            }
-            else {
-                cell.secondLabel.isHidden = true;
-                cell.secondImage.isHidden = true;
-            }
-            if element.legs.count > 2 {
-                cell.thirdLabel.text = self.getDisplayTextForTheMode(element.legs[2]);
-                cell.thirdImage.image = UIImage(named: self.getImageForTheMode(element.legs[2]));
-                cell.thirdLabel.isHidden = false;
-                cell.thirdImage.isHidden = false;
-            }
-            else {
-                cell.thirdLabel.isHidden = true;
-                cell.thirdImage.isHidden = true;
-            }
-            if element.legs.count > 3 {
-                cell.fourthLabel.text = self.getDisplayTextForTheMode(element.legs[3]);
-                cell.fourthImage.image = UIImage(named: self.getImageForTheMode(element.legs[3]));
-                cell.fourthLabel.isHidden = false;
-                cell.fourthImage.isHidden = false;
-            }
-            else {
-                cell.fourthLabel.isHidden = true;
-                cell.fourthImage.isHidden = true;
-            }
+            cell.updateTableContents(element: element)
             
-            cell.fifthLabel.text = self.getDurationInString(element.duration)
-            cell.departureLabel.text = self.getFormattedTime(unixMilliSeconds: element.startTime) + " - " + self.getFormattedTime(unixMilliSeconds: element.endTime);
             return cell
         }.disposed(by: disposeBag)
     }
     
     private func initializeRouteInfoTableView() {
         
+        routeInfoTableView.layoutIfNeeded();
         routeInfoTableView.rx
             .setDelegate(self)
             .disposed(by: disposeBag);
@@ -248,58 +210,6 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
             
             return cell
         }.disposed(by: disposeBag)
-    }
-    
-    private func getDisplayTextForTheMode(_ leg: PlanQuery.Data.Plan.Itinerary.Leg?) -> String {
-        var displayText = "";
-        if let mode = leg?.mode{
-            switch mode {
-            case .walk:
-                displayText = self.getDurationInString(leg?.duration)
-                break;
-            default:
-                if let tripName = leg?.trip?.routeShortName {
-                    displayText = tripName;
-                }
-            }
-        }
-        return displayText;
-    }
-    
-    private func getImageForTheMode(_ leg: PlanQuery.Data.Plan.Itinerary.Leg?) -> String {
-        var transportImage:String = "";
-        switch (leg?.mode) {
-        case .bus:
-            transportImage = "bus.png";
-            break;
-        case .tram:
-            transportImage = "tram.png";
-            break;
-        case .subway:
-            transportImage = "subway.png";
-            break;
-        case .rail:
-            transportImage = "train.png"
-            break;
-        case .walk:
-            transportImage = "walk.png"
-            break;
-        default:
-            transportImage = ""
-            break;
-        }
-        return transportImage;
-    }
-    private func getFormattedTime(unixMilliSeconds: String?) -> String {
-        var formattedTime = "";
-        if let unixMilliSeconds = unixMilliSeconds {
-            if let startTimeInteger = Int64(unixMilliSeconds) {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "HH:mm"
-                formattedTime = formatter.string(from: Date(milliseconds: startTimeInteger))
-            }
-        }
-        return formattedTime;
     }
     
     private func fetchNearbyPOIs()
@@ -318,7 +228,6 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
                     }
                 }
             }).disposed(by: disposeBag);
-        
     }
     
     private func loadNearbyPOIsToMap(_ articles: [Article]?)
@@ -389,11 +298,11 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
     func getRouteInstructions(_ leg: PlanQuery.Data.Plan.Itinerary.Leg) -> [String]{
         var instructions: [String] = [String]()
         var tranportMode: String = ""
-        let startTime = getFormattedTime(unixMilliSeconds: leg.startTime) + ": ";
-        let endTime = getFormattedTime(unixMilliSeconds: leg.endTime) + ": ";
+        let startTime = String(unixMilliSeconds: leg.startTime) + ": ";
+        let endTime = String(unixMilliSeconds: leg.endTime) + ": ";
         
         if leg.mode == Mode.walk {
-            instructions.append(startTime + "Walk " + getDurationInString(leg.duration))
+            instructions.append(startTime + "Walk " + String(duration: leg.duration))
         }
         if leg.mode == Mode.bus {
             tranportMode = startTime + "Take Bus ";
@@ -417,42 +326,6 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
             instructions.append(endTime + "reach " + destination);
         }
         return instructions;
-    }
-    
-    func getDurationInString(_ duration: Double?) -> String {
-        var durationTime: String = "";
-        if var duration = duration {
-            if duration > 3600 {
-                durationTime.append("\(Int(duration/3600)) h ")
-                duration = duration - Double((Int(duration/3600) * 60))
-            }
-            if duration > 60 {
-                durationTime.append("\(Int(duration/60)) min ")
-            }
-            if duration <= 60 {
-                durationTime.append("1 min ")
-            }
-        }
-        return durationTime;
-    }
-    
-    func getDurationInString(_ duration: String?) -> String {
-        var durationTime: String = "";
-        if let durationStr = duration {
-            if var duration = Double(durationStr) {
-                if duration > 3600 {
-                    durationTime.append("\(Int(duration/3600)) h ")
-                    duration = duration - Double((Int(duration/3600) * 60))
-                }
-                if duration > 60 {
-                    durationTime.append("\(Int(duration/60)) min ")
-                }
-                if duration <= 60 {
-                    durationTime.append("1 min ")
-                }
-            }
-        }
-        return durationTime;
     }
     
     //To show only the selected poi when it is selected
@@ -491,36 +364,6 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
         let fittingRect = rects.reduce(MKMapRect.null)  { $0.union($1) }
         
         mapView.setVisibleMapRect(fittingRect, edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 315, right: 20), animated: true)
-    }
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.lineWidth = 5.0
-        
-        switch (overlay.title)
-        {
-        case "WALK":
-            renderer.strokeColor = UIColor.green
-            break;
-        case "BUS":
-            renderer.strokeColor = UIColor.blue
-            break;
-        default:
-            renderer.strokeColor = UIColor.blue
-            break;
-        }
-        
-        return renderer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == routeInfoTableView {
-            return 40;
-        }
-        else {
-            return 80.0;
-        }
     }
     
     func loadPointsOfInterest(_ articles: [Article]) -> [PointOfInterest] {
@@ -638,6 +481,19 @@ class ViewController: UIViewController, UITableViewDelegate, CLLocationManagerDe
     }
 }
 
+// MARK: - TableView Delegates
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == routeInfoTableView {
+            return 40;
+        }
+        else {
+            return 80.0;
+        }
+    }
+}
+
 // MARK: - MKMapView Delegates
 extension ViewController: MKMapViewDelegate {
     
@@ -690,7 +546,7 @@ extension ViewController: MKMapViewDelegate {
             //Fetch the details of the selected POI
             populatePOIDetails(pageId: currentPOI.pageId);
             //Center the map based on the selected POI Coordinates
-            let region = MKCoordinateRegion(center: annotation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            let region = MKCoordinateRegion(center: annotation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005))
             let rect:MKMapRect = MKMapRectForCoordinateRegion(region);
             mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 295, right: 20), animated: true)
         }
@@ -707,6 +563,27 @@ extension ViewController: MKMapViewDelegate {
         centerMapViewToUserLocation();
         //Bring back all the annotations now that the poi is deselected
         self.pois.onNext(annotations);
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.lineWidth = 5.0
+        
+        switch (overlay.title)
+        {
+        case "WALK":
+            renderer.strokeColor = UIColor.green
+            break;
+        case "BUS":
+            renderer.strokeColor = UIColor.blue
+            break;
+        default:
+            renderer.strokeColor = UIColor.blue
+            break;
+        }
+        
+        return renderer
     }
 }
 

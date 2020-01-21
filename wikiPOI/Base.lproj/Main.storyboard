@@ -87,10 +87,10 @@
                                                 <state key="normal" title="Back to POI Info"/>
                                             </button>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qbx-S3-ty8">
-                                                <rect key="frame" x="0.0" y="40" width="320" height="270"/>
+                                                <rect key="frame" x="0.0" y="40" width="320" height="255"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="270" id="a9Y-c3-3r7"/>
+                                                    <constraint firstAttribute="height" constant="255" id="a9Y-c3-3r7"/>
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="routeCell" rowHeight="80" id="pen-uj-lvA" customClass="RouteSuggestionsTableViewCell" customModule="wikiPOI" customModuleProvider="target">
@@ -216,6 +216,7 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstItem="hed-vo-rNj" firstAttribute="leading" secondItem="nve-RA-bUu" secondAttribute="leading" constant="20" id="Pt7-qx-Y1Q"/>
+                                            <constraint firstAttribute="bottom" secondItem="qbx-S3-ty8" secondAttribute="bottom" id="STm-qX-bH8"/>
                                             <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hed-vo-rNj" secondAttribute="trailing" constant="284" id="WfK-FN-RZq"/>
                                             <constraint firstAttribute="height" constant="295" id="XBg-JG-xLd"/>
                                             <constraint firstItem="hed-vo-rNj" firstAttribute="top" secondItem="nve-RA-bUu" secondAttribute="top" id="fs8-bL-KeI"/>
@@ -250,10 +251,10 @@
                                         <state key="normal" title="Back to suggestions"/>
                                     </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QTx-nX-WEH">
-                                        <rect key="frame" x="0.0" y="40" width="320" height="295"/>
+                                        <rect key="frame" x="0.0" y="40" width="320" height="255"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="295" id="S4Z-Rv-wjt"/>
+                                            <constraint firstAttribute="height" constant="255" id="S4Z-Rv-wjt"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="routeInfoCell" rowHeight="80" id="TDw-ni-gQ0" customClass="RouteInfoTableViewCell" customModule="wikiPOI" customModuleProvider="target">
@@ -288,6 +289,7 @@
                                     <constraint firstAttribute="height" constant="295" id="FcH-Cw-HPq"/>
                                     <constraint firstItem="QTx-nX-WEH" firstAttribute="top" secondItem="c9i-mU-7Yb" secondAttribute="top" constant="40" id="dq5-xs-0oi"/>
                                     <constraint firstAttribute="trailing" secondItem="QTx-nX-WEH" secondAttribute="trailing" id="fnW-aR-9pz"/>
+                                    <constraint firstAttribute="bottom" secondItem="QTx-nX-WEH" secondAttribute="bottom" id="h1u-bq-YEG"/>
                                     <constraint firstItem="QTx-nX-WEH" firstAttribute="leading" secondItem="c9i-mU-7Yb" secondAttribute="leading" id="krT-m4-20H"/>
                                     <constraint firstItem="A6t-Pr-G2M" firstAttribute="leading" secondItem="c9i-mU-7Yb" secondAttribute="leading" constant="20" id="rLl-lQ-TJD"/>
                                     <constraint firstItem="A6t-Pr-G2M" firstAttribute="top" secondItem="c9i-mU-7Yb" secondAttribute="top" id="reg-1E-eJw"/>

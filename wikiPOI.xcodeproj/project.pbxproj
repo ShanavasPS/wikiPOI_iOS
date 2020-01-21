@@ -35,6 +35,7 @@
 		8EB3283D23D35F5400E03390 /* RouteInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3283C23D35F5400E03390 /* RouteInfoTableViewCell.swift */; };
 		8EB3284123D381F500E03390 /* POIImagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3284023D381F500E03390 /* POIImagesCollectionViewCell.swift */; };
 		8EB3284923D3BD3500E03390 /* POIImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3284823D3BD3500E03390 /* POIImageInfo.swift */; };
+		8EC7640D23D6CB730058E5DC /* String+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC7640C23D6CB730058E5DC /* String+Extenstion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		8EB3283C23D35F5400E03390 /* RouteInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfoTableViewCell.swift; sourceTree = "<group>"; };
 		8EB3284023D381F500E03390 /* POIImagesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIImagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		8EB3284823D3BD3500E03390 /* POIImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIImageInfo.swift; sourceTree = "<group>"; };
+		8EC7640C23D6CB730058E5DC /* String+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extenstion.swift"; sourceTree = "<group>"; };
 		97FDF156121F11F3CE259C2E /* Pods_wikiPOI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wikiPOI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3E8F382081B9360E23F55B4 /* Pods_wikiPOITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wikiPOITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B675E41DCB82888556554F01 /* Pods-wikiPOI-wikiPOIUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wikiPOI-wikiPOIUITests.release.xcconfig"; path = "Target Support Files/Pods-wikiPOI-wikiPOIUITests/Pods-wikiPOI-wikiPOIUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			children = (
 				8E03C46723CD861F0036D6E6 /* URLRequest+Extensions.swift */,
 				8E22C56623D4B6270040BD4F /* Date+Extensions.swift */,
+				8EC7640C23D6CB730058E5DC /* String+Extenstion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 				8E562A0D23CD040500D14A46 /* SceneDelegate.swift in Sources */,
 				8E39BB0923D1DF5600B4837A /* RouteSuggestionsTableViewCell.swift in Sources */,
 				8E39BB0223D1A71E00B4837A /* Network.swift in Sources */,
+				8EC7640D23D6CB730058E5DC /* String+Extenstion.swift in Sources */,
 				8EB3284923D3BD3500E03390 /* POIImageInfo.swift in Sources */,
 				8E03C46823CD861F0036D6E6 /* URLRequest+Extensions.swift in Sources */,
 				8E39BB0023D1319600B4837A /* API.swift in Sources */,
