@@ -14,7 +14,7 @@ import MapKit
 import RxMKMapView
 import Polyline
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -25,7 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var poiCollectionView: UICollectionView!
     
     @IBOutlet weak var routeInfoTableView: UITableView!
-    
+        
     @IBOutlet weak var directionsViewPOITitle: UILabel!
     
     @IBOutlet weak var directionsViewPOIDescription: UILabel!
@@ -116,7 +116,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     private func initializeLocationManager()
     {
-        manager.delegate = self;
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
         manager.desiredAccuracy = kCLLocationAccuracyBest
