@@ -14,18 +14,11 @@ class RouteSuggestionsTableViewCell: UITableViewCell, UICollectionViewDelegate {
     
     @IBOutlet weak var routesCollectionView: UICollectionView!
     
-    @IBOutlet weak var firstLabel: UILabel!
-    @IBOutlet weak var secondLabel: UILabel!
-    @IBOutlet weak var thirdLabel: UILabel!
-    @IBOutlet weak var fourthLabel: UILabel!
-    @IBOutlet weak var fifthLabel: UILabel!
-    @IBOutlet weak var firstImage: UIImageView!
-    @IBOutlet weak var secondImage: UIImageView!
-    @IBOutlet weak var thirdImage: UIImageView!
-    @IBOutlet weak var fourthImage: UIImageView!
-    @IBOutlet weak var departureLabel: UILabel!
+    @IBOutlet weak var departureArrivalLabel: UILabel!
     
-    var routes: PublishSubject<[PlanQuery.Data.Plan.Itinerary.Leg]> = PublishSubject()
+    @IBOutlet weak var durationLabel: UILabel!
+    
+    var routes = PublishSubject<[PlanQuery.Data.Plan.Itinerary.Leg?]>()
 
     private let disposeBag = DisposeBag()
     
@@ -37,21 +30,20 @@ class RouteSuggestionsTableViewCell: UITableViewCell, UICollectionViewDelegate {
     func registerCell() {
         self.routesCollectionView.delegate = self
         
-        routes.asObserver().bind(to: routesCollectionView.rx.items) {
+        routes.asObservable().bind(to: routesCollectionView.rx.items) {
             (collectionView, row, element) -> UICollectionViewCell in
             let indexPath = IndexPath(row: row, section: 0)
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "routeCell", for: indexPath) as! RouteSuggestionsCollectionViewCell
-            cell.updateViewContents(leg: element);
+            cell.updateViewContents(leg: element!);
             return cell;
         }.disposed(by: disposeBag)
     }
     
-    func updateTableContents(element: PlanQuery.Data.Plan.Itinerary?) {
-        if let legs:[PlanQuery.Data.Plan.Itinerary.Leg] = element?.legs as? [PlanQuery.Data.Plan.Itinerary.Leg] {
+    func updateTableContents(element: PlanQuery.Data.Plan.Itinerary) {
+        if let legs:[PlanQuery.Data.Plan.Itinerary.Leg] = element.legs as? [PlanQuery.Data.Plan.Itinerary.Leg] {
             self.routes.onNext(legs);
         }
-//        fifthLabel.text = String(duration: element.duration)
-//
-//        departureLabel.text = String(unixMilliSeconds: element.startTime) + " - " + String(unixMilliSeconds: element.endTime)
+        durationLabel.text = String(duration: element.duration)
+        departureArrivalLabel.text = String(unixMilliSeconds: element.startTime) + " - " + String(unixMilliSeconds: element.endTime)
     }
 }
